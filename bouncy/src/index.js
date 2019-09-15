@@ -28,6 +28,21 @@ while (balls.length < 25) {
   balls.push(ball);
 }
 
+// collision detect
+const collisionDetect = (ball) => {
+  balls.forEach(el => {
+    if (!(el=== ball)) {
+      var dx = el.x - ball.x;
+      var dy = el.y - ball.y;
+      var distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < el.size + ball.size) {
+        ball.color = el.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) +')';
+      }
+    }
+  });
+};
+
 // loop function
 
 const loop = () => {
@@ -37,10 +52,11 @@ const loop = () => {
   for (var i = 0; i < balls.length; i++) {
     balls[i].draw(base.ctx);
     balls[i].update();
+    collisionDetect(balls[i]);
   }
 
   requestAnimationFrame(loop);
-}
+};
 
 // Play it
 loop();
